@@ -39,7 +39,7 @@ const DeliveryDashboard = () => {
 
   const fetchDietCharts = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/diet-charts');
+      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts');
       const filteredCharts = response.data.filter(chart =>
         chart.meals.some(meal => meal.preparationStatus === 'ready')
       );
@@ -53,7 +53,7 @@ const DeliveryDashboard = () => {
 
   const fetchCompletedDeliveries = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/tasks/delivery/completed');
+      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/api/tasks/delivery/completed');
       setCompletedDeliveries(response.data);
     } catch (error) {
       console.error('Error fetching completed deliveries:', error);
@@ -62,7 +62,7 @@ const DeliveryDashboard = () => {
 
   const updateMealStatus = async (chartId, mealId) => {
     try {
-      await axios.patch(`http://localhost:5001/api/diet-charts/${chartId}/meals/${mealId}`, {
+      await axios.patch(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts/${chartId}/meals/${mealId}`, {
         status: 'delivered'
       });
       fetchDietCharts();

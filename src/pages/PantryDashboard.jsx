@@ -40,7 +40,7 @@ const PantryDashboard = () => {
 
   const fetchDietCharts = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/diet-charts');
+      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts');
       const filteredCharts = response.data.filter(chart => 
         chart.meals.some(meal => 
           meal.preparationStatus === 'pending' || 
@@ -60,7 +60,7 @@ const PantryDashboard = () => {
     try {
       if (!selectedDate) return;
       const formattedDate = selectedDate.toISOString().split('T')[0];
-      const response = await axios.get(`http://localhost:5001/api/tasks/pantry/completed?date=${formattedDate}`);
+      const response = await axios.get(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/tasks/pantry/completed?date=${formattedDate}`);
       if (Array.isArray(response.data)) {
         setCompletedPreparations(response.data);
       } else {
@@ -74,7 +74,7 @@ const PantryDashboard = () => {
 
   const updateMealStatus = async (chartId, mealId, status) => {
     try {
-      await axios.patch(`http://localhost:5001/api/diet-charts/${chartId}/meals/${mealId}`, {
+      await axios.patch(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts/${chartId}/meals/${mealId}`, {
         status
       });
       await fetchDietCharts();
