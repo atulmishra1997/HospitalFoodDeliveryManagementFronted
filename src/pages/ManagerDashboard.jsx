@@ -57,7 +57,7 @@ const ManagerDashboard = () => {
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/patients');
+      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/api/patients');
       setPatients(response.data);
     } catch (error) {
       console.error('Error fetching patients:', error);
@@ -66,7 +66,7 @@ const ManagerDashboard = () => {
 
   const fetchDietCharts = async () => {
     try {
-      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/diet-charts');
+      const response = await axios.get('https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts');
       setDietCharts(response.data);
     } catch (error) {
       console.error('Error fetching diet charts:', error);
@@ -175,14 +175,14 @@ const ManagerDashboard = () => {
         };
     
         if (selectedItem) {
-          const response = await axios.patch(`https://hospitalfooddeliverymanagementbackend.onrender.com/patients/${selectedItem._id}`, patientData);
+          const response = await axios.patch(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/patients/${selectedItem._id}`, patientData);
           setPatients(prevPatients => 
             prevPatients.map(patient => 
               patient._id === selectedItem._id ? response.data : patient
             )
           );
         } else {
-          const response = await axios.post('https://hospitalfooddeliverymanagementbackend.onrender.com/patients', patientData);
+          const response = await axios.post('https://hospitalfooddeliverymanagementbackend.onrender.com/api/patients', patientData);
           setPatients(prevPatients => [...prevPatients, response.data]);
         }
         handleCloseDialog();
@@ -190,14 +190,14 @@ const ManagerDashboard = () => {
         await fetchPatients();
       } else {
         if (selectedItem) {
-          const response = await axios.patch(`https://hospitalfooddeliverymanagementbackend.onrender.com/diet-charts/${selectedItem._id}`, formData);
+          const response = await axios.patch(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts/${selectedItem._id}`, formData);
           setDietCharts(prevCharts => 
             prevCharts.map(chart => 
               chart._id === selectedItem._id ? response.data : chart
             )
           );
         } else {
-          const response = await axios.post('https://hospitalfooddeliverymanagementbackend.onrender.com/diet-charts', formData);
+          const response = await axios.post('https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts', formData);
           setDietCharts(prevCharts => [...prevCharts, response.data]);
         }
         handleCloseDialog();
@@ -214,10 +214,10 @@ const ManagerDashboard = () => {
   const handleDelete = async (type, id) => {
     try {
       if (type === 'patient') {
-        await axios.delete(`https://hospitalfooddeliverymanagementbackend.onrender.com/patients/${id}`);
+        await axios.delete(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/patients/${id}`);
         fetchPatients();
       } else {
-        await axios.delete(`https://hospitalfooddeliverymanagementbackend.onrender.com/diet-charts/${id}`);
+        await axios.delete(`https://hospitalfooddeliverymanagementbackend.onrender.com/api/diet-charts/${id}`);
         fetchDietCharts();
       }
     } catch (error) {
